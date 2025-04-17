@@ -21,51 +21,60 @@ const Main = () => {
   );
 
   return (
-    <div>
-      <section className="flex justify-around">
-        <div className="ml-[14rem] mt-10">
-          <div className="-translate-x-4 flex">
+    <div className="bg-[#0f0f0f] min-h-screen px-6 py-10">
+      <section className="flex flex-col lg:flex-row justify-between gap-10">
+        {/* Left Section */}
+        <div className="flex-1">
+          {/* Metric Cards */}
+          <div className="flex flex-wrap gap-6 mb-10">
             <SecondaryCard
               pill="Users"
               content={visitors?.length}
-              info="20.2k more then usual"
+              info="20.2k more than usual"
               gradient="from-teal-500 to-lime-400"
             />
             <SecondaryCard
               pill="Comments"
               content={sumOfCommentsLength}
-              info="742.8 more then usual"
+              info="742.8 more than usual"
               gradient="from-[#CCC514] to-[#CDCB8E]"
             />
             <SecondaryCard
               pill="Movies"
               content={allMovies?.length}
-              info="372+ more then usual"
+              info="372+ more than usual"
               gradient="from-green-500 to-lime-400"
             />
           </div>
-          <div className="flex justify-between w-[90%] text-white mt-10 font-bold">
+  
+          {/* Section Heading */}
+          <div className="flex justify-between text-white font-bold mb-4">
             <p>Top Content</p>
             <p>Comments</p>
           </div>
-
-          {topMovies?.map((movie) => (
-            <VideoCard
-              key={movie._id}
-              image={movie.image}
-              title={movie.name}
-              date={movie.year}
-              comments={movie.numReviews}
-            />
-          ))}
+  
+          {/* Movie Cards */}
+          <div className="flex flex-col gap-4">
+            {topMovies?.map((movie) => (
+              <VideoCard
+                key={movie._id}
+                image={movie.image}
+                title={movie.name}
+                date={movie.year}
+                comments={movie.numReviews}
+              />
+            ))}
+          </div>
         </div>
-
-        <div>
+  
+        {/* Right Section */}
+        <div className="w-full lg:w-[30%]">
           <RealTimeCard />
         </div>
       </section>
     </div>
   );
+  
 };
 
 export default Main;

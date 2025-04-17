@@ -12,37 +12,32 @@ const AdminMoviesList = () => {
             All Movies ({movies?.length})
           </div>
 
-          <div className="flex flex-wrap justify-around items-center p-[2rem]">
+          <div className="flex flex-wrap justify-center items-center p-[2rem]">
             {movies?.map((movie) => (
               <Link
                 key={movie._id}
                 to={`/admin/movies/update/${movie._id}`}
-                className="block mb-4 overflow-hidden"
+                className="block mb-4 overflow-hidden transform transition-all duration-300 hover:scale-105"
               >
-                <div className="flex">
-                  <div
-                    key={movie._id}
-                    className="max-w-sm  m-[2rem] rounded overflow-hidden shadow-lg"
-                  >
-                    <img
-                      src={movie.image}
-                      alt={movie.name}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="px-6 py-4 border border-gray-400">
-                      <div className="font-bold text-xl mb-2">{movie.name}</div>
-                    </div>
+                <div className="max-w-sm m-[2rem] rounded-lg overflow-hidden shadow-xl bg-white hover:shadow-2xl hover:scale-105 transform transition-all duration-300">
+                  <img
+                    src={movie.image}
+                    alt={movie.name}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
+                  <div className="px-6 py-4 border-b border-gray-300">
+                    <div className="font-bold text-xl mb-2">{movie.name}</div>
+                  </div>
 
-                    <p className="text-gray-700 text-base">{movie.detail}</p>
+                  <p className="px-6 py-2 text-gray-700 text-base">{movie.detail}</p>
 
-                    <div className="mt-[2rem] mb-[1rem]">
-                      <Link
-                        to={`/admin/movies/update/${movie._id}`}
-                        className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Update Movie
-                      </Link>
-                    </div>
+                  <div className="flex justify-center mt-4 mb-[2rem]">
+                    <Link
+                      to={`/admin/movies/update/${movie._id}`}
+                      className="bg-teal-500 text-white font-bold py-2 px-4 rounded-full hover:bg-teal-700 transition-all duration-300 transform hover:scale-105"
+                    >
+                      Update Movie
+                    </Link>
                   </div>
                 </div>
               </Link>

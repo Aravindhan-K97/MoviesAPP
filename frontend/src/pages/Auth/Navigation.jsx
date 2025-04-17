@@ -29,87 +29,93 @@ const Navigation = () => {
       await logoutApiCall().unwrap();
       dispatch(logout());
       navigate("/login");
+      setDropdownOpen(false); // Close dropdown after logout
     } catch (error) {
       console.error(error);
     }
   };
 
+  const closeDropdown = () => {
+    setDropdownOpen(false); // Close dropdown on option click
+  };
+
   return (
-    <div className="fixed bottom-10 left-[30rem] transform translate-x-1/2 translate-y-1/2 z-50 bg-[#0f0f0f] border w-[30%] px-[4rem] mb-[2rem] rounded">
+    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 bg-[#0f0f0f] border w-[90%] sm:w-[30%] px-6 py-4 rounded-lg shadow-lg">
       <section className="flex justify-between items-center">
         {/* Section 1 */}
-        <div className="flex justify-center items-center mb-[2rem]">
+        <div className="flex items-center space-x-6">
           <Link
             to="/"
-            className="flex items-center transition-transform transform hover:translate-x-2"
+            className="flex items-center transition-transform hover:scale-110 text-white"
+            onClick={closeDropdown} // Close dropdown on Home click
           >
-            <AiOutlineHome className="mr-2 mt-[3rem]" size={26} />
-            <span className="hidden nav-item-name mt-[3rem]">Home</span>
+            <AiOutlineHome size={26} />
+            <span className="ml-2 hidden sm:block">Home</span>
           </Link>
 
           <Link
             to="/movies"
-            className="flex items-center transition-transform transform hover:translate-x-2 ml-[1rem]"
+            className="flex items-center transition-transform hover:scale-110 text-white"
+            onClick={closeDropdown} // Close dropdown on Shop click
           >
-            <MdOutlineLocalMovies className="mr-2 mt-[3rem]" size={26} />
-            <span className="hidden nav-item-name mt-[3rem]">SHOP</span>
+            <MdOutlineLocalMovies size={26} />
+            <span className="ml-2 hidden sm:block">Shop</span>
           </Link>
         </div>
+
         {/* Section 2 */}
-        <div className="relative">
+        <div className="relative text-white">
           <button
             onClick={toggleDropdown}
-            className="text-gray-800 focus:outline-none"
+            className="flex items-center space-x-1 focus:outline-none"
           >
-            {userInfo ? (
-              <span className="text-white">{userInfo.username}</span>
-            ) : (
-              <></>
-            )}
-
             {userInfo && (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className={`h-4 w-4 ml-1 ${
-                  dropdownOpen ? "transform rotate-180" : ""
-                }`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="white"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d={dropdownOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
-                />
-              </svg>
+              <>
+                <span>{userInfo.username}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-4 w-4 transition-transform ${
+                    dropdownOpen ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="white"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d={dropdownOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
+                  />
+                </svg>
+              </>
             )}
           </button>
 
+          {/* Dropdown */}
           {dropdownOpen && userInfo && (
             <ul
-              className={`absolute right-0 mt-2 mr-14 w-[10rem] space-y-2 bg-white text-gray-600 ${
-                !userInfo.isAdmin ? "-top-20" : "-top-24"
+              className={`absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded-md py-2 transition-all ease-in-out duration-200 ${
+                !userInfo.isAdmin ? "-top-28" : "-top-32"
               }`}
             >
               {userInfo.isAdmin && (
-                <>
-                  <li>
-                    <Link
-                      to="/admin/movies/dashboard"
-                      className="block px-4 py-2 hover:bg-gray-100"
-                    >
-                      Dashboard
-                    </Link>
-                  </li>
-                </>
+                <li>
+                  <Link
+                    to="/admin/movies/dashboard"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                    onClick={closeDropdown} // Close dropdown on Dashboard click
+                  >
+                    Dashboard
+                  </Link>
+                </li>
               )}
 
               <li>
                 <Link
                   to="/profile"
                   className="block px-4 py-2 hover:bg-gray-100"
+                  onClick={closeDropdown} // Close dropdown on Profile click
                 >
                   Profile
                 </Link>
@@ -118,7 +124,7 @@ const Navigation = () => {
               <li>
                 <button
                   onClick={logoutHandler}
-                  className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
                 >
                   Logout
                 </button>
@@ -126,25 +132,28 @@ const Navigation = () => {
             </ul>
           )}
 
+          {/* Not logged in */}
           {!userInfo && (
-            <ul className="flex">
+            <ul className="flex space-x-4 mt-2">
               <li>
                 <Link
                   to="/login"
-                  className="flex items-center mt-5 transition-transform transform hover:translate-x-2 mb-[2rem]"
+                  className="flex items-center transition-transform hover:scale-110"
+                  onClick={closeDropdown} // Close dropdown on Login click
                 >
-                  <AiOutlineLogin className="mr-2 mt-[4px]" size={26} />
-                  <span className="hidden nav-item-name">LOGIN</span>
+                  <AiOutlineLogin size={24} className="mr-2" />
+                  <span className="hidden sm:block">Login</span>
                 </Link>
               </li>
 
               <li>
                 <Link
                   to="/register"
-                  className="flex items-center mt-5 transition-transform transform hover:translate-x-2 ml-[1rem]"
+                  className="flex items-center transition-transform hover:scale-110"
+                  onClick={closeDropdown} // Close dropdown on Register click
                 >
-                  <AiOutlineUserAdd size={26} />
-                  <span className="hidden nav-item-name">REGISTER</span>
+                  <AiOutlineUserAdd size={24} className="mr-2" />
+                  <span className="hidden sm:block">Register</span>
                 </Link>
               </li>
             </ul>

@@ -4,12 +4,11 @@ import {
   useGetTopMoviesQuery,
   useGetRandomMoviesQuery,
 } from "../../redux/api/movies";
-
 import { useFetchGenresQuery } from "../../redux/api/genre";
 import SliderUtil from "../../component/SliderUtil";
 
 const MoviesContainerPage = () => {
-  const { data } = useGetNewMoviesQuery();
+  const { data: newMovies } = useGetNewMoviesQuery();
   const { data: topMovies } = useGetTopMoviesQuery();
   const { data: genres } = useFetchGenresQuery();
   const { data: randomMovies } = useGetRandomMoviesQuery();
@@ -20,17 +19,18 @@ const MoviesContainerPage = () => {
     setSelectedGenre(genreId);
   };
 
-  const filteredMovies = data?.filter(
+  const filteredMovies = newMovies?.filter(
     (movie) => selectedGenre === null || movie.genre === selectedGenre
   );
 
   return (
-    <div className="flex flex-col lg:flex-row lg:justify-between items-center">
-      <nav className=" ml-[4rem] flex flex-row xl:flex-col lg:flex-col md:flex-row sm:flex-row">
+    <div className="flex flex-col lg:flex-row lg:justify-between items-start">
+      {/* Genre Buttons */}
+      <nav className="lg:w-[20%] flex flex-wrap justify-start items-center space-x-4 lg:flex-col xl:flex-col md:flex-row sm:flex-row mb-6 lg:mb-0">
         {genres?.map((g) => (
           <button
             key={g._id}
-            className={`transition duration-300 ease-in-out hover:bg-gray-200 block p-2 rounded mb-[1rem] text-lg ${
+            className={`transition duration-300 ease-in-out hover:bg-gray-200 block p-2 rounded mb-2 text-lg ${
               selectedGenre === g._id ? "bg-gray-200" : ""
             }`}
             onClick={() => handleGenreClick(g._id)}
@@ -40,19 +40,23 @@ const MoviesContainerPage = () => {
         ))}
       </nav>
 
-      <section className="flex flex-col justify-center items-center w-full lg:w-auto">
-        <div className="w-full lg:w-[100rem] mb-8 ">
-          <h1 className="mb-5">Choose For You</h1>
+      {/* Movie Sliders Section */}
+      <section className="w-full lg:w-[75%]">
+        {/* Random Movies Slider */}
+        <div className="mb-8">
+          <h1 className="text-xl md:text-2xl font-semibold mb-4">Choose For You</h1>
           <SliderUtil data={randomMovies} />
         </div>
 
-        <div className="w-full lg:w-[100rem] mb-8">
-          <h1 className="mb-5">Top Movies</h1>
+        {/* Top Movies Slider */}
+        <div className="mb-8">
+          <h1 className="text-xl md:text-2xl font-semibold mb-4">Top Movies</h1>
           <SliderUtil data={topMovies} />
         </div>
 
-        <div className="w-full lg:w-[100rem] mb-8">
-          <h1 className="mb-5">Choose Movie</h1>
+        {/* Filtered Movies Slider */}
+        <div className="mb-8">
+          <h1 className="text-xl md:text-2xl font-semibold mb-4">Choose Movie</h1>
           <SliderUtil data={filteredMovies} />
         </div>
       </section>

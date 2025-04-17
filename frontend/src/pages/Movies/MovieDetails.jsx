@@ -40,45 +40,46 @@ const MovieDetails = () => {
       <div>
         <Link
           to="/"
-          className="  text-white font-semibold hover:underline ml-[20rem]"
+          className="text-white font-semibold hover:underline ml-4 md:ml-8"
         >
           Go Back
         </Link>
       </div>
 
-      <div className="mt-[2rem]">
-        <div className="flex justify-center items-center">
+      <div className="mt-8">
+        <div className="flex justify-center items-center mb-8">
           <img
             src={movie?.image}
             alt={movie?.name}
-            className="w-[70%] rounded"
+            className="w-[80%] md:w-[60%] rounded-md shadow-lg"
           />
         </div>
-        {/* Container One */}
-        <div className="container  flex justify-between ml-[20rem] mt-[3rem]">
-          <section>
-            <h2 className="text-5xl my-4 font-extrabold">{movie?.name}</h2>
-            <p className="my-4 xl:w-[35rem] lg:w-[35rem] md:w-[30rem] text-[#B0B0B0]">
-              {movie?.detail}
-            </p>
+
+        {/* Movie Info Section */}
+        <div className="flex flex-col md:flex-row justify-between items-center px-4 md:px-8">
+          <section className="md:w-[60%]">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4">{movie?.name}</h2>
+            <p className="text-gray-400 text-base md:text-lg">{movie?.detail}</p>
           </section>
 
-          <div className="mr-[5rem]">
-            <p className="text-2xl font-semibold">
+          <div className="mt-8 md:mt-0 md:w-[30%]">
+            <p className="text-2xl font-semibold mb-2">
               Releasing Date: {movie?.year}
             </p>
 
             <div>
-              {movie?.cast.map((c) => (
-                <ul key={c._id}>
-                  <li className="mt-[1rem]">{c}</li>
+              <p className="font-semibold">Cast:</p>
+              {movie?.cast.map((c, idx) => (
+                <ul key={idx} className="mt-2">
+                  <li className="text-gray-300">{c}</li>
                 </ul>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="container ml-[20rem]">
+        {/* Movie Review Section */}
+        <div className="mt-8">
           <MovieTabs
             loadingMovieReview={loadingMovieReview}
             userInfo={userInfo}

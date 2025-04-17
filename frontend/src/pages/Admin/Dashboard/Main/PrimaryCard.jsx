@@ -4,9 +4,11 @@ const PrimaryCard = () => {
   const { data: visitors } = useGetUsersQuery();
 
   return (
-    <div className="w-[100%] h-[10%]  bg-[#282828] text-white rounded-lg p-6">
-      <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
-      <p>You have {visitors?.length} new users, watching your content.</p>
+    <div className="w-full bg-gradient-to-r from-purple-700 via-purple-600 to-purple-500 text-white rounded-2xl shadow-lg p-6">
+      <h2 className="text-2xl font-bold mb-2">🎉 Congratulations!</h2>
+      <p className="text-lg">
+        You have <span className="font-semibold">{visitors?.length}</span> new users watching your content.
+      </p>
     </div>
   );
 };
